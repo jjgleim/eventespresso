@@ -5,3 +5,47 @@ jQuery(document).ready(function() {
 		jQuery('.copy-all-button').click();
 	});
 });
+
+// replaces the section in espresso_cart_functions.js for the copy-all-button
+
+jQuery('.event_questions input').on( 'change', function() {
+	
+		var from_attendee_no = '1';
+		
+		jQuery('.multi_regis_wrapper_attendee-additional .event_form_field :input').each(function(){
+	        // console.log(jQuery(this).attr('id') + ' > ' + jQuery(this).val());
+                var id = jQuery(this).attr('name').split('[');
+                var from_event_id = id[1].substring(0, id[1].length -1);
+                var from_price_id = id[2].substring(0, id[2].length -1);
+	        var val = jQuery(this).val();
+	        var name = jQuery(this).attr('name');
+	        var input_type = jQuery(this).attr('type');
+
+	        var copy_field_name = name.replace(/(\[\d+\])(\[\d+\])(\[\d+\])/,"[" + from_event_id + "][" + from_price_id + "][" + from_attendee_no + "]");
+	        // alert(copy_field_name);
+
+	        var copy_from = jQuery(":input[name='" + copy_field_name + "']");
+	        //console.log(jQuery(this).attr('name') + ' > ' + copy_field_name + ' > ' + copy_from.val());
+		 
+	        switch (input_type) {
+		 
+	            case 'text':
+	            case 'textarea':
+	                jQuery(this).val(copy_from.val());
+	                break;
+				 
+	            case 'radio':
+	            case 'checkbox':
+	                if (copy_from.attr('checked') && val == copy_from.val())
+	                    jQuery(this).attr("checked", "checked");
+	                break;
+				 
+	            default:
+	                jQuery(this).val(copy_from.val());
+				 
+			}
+        		//console.log(jQuery('#multi_regis_form_fields-' + to + " input[name='" + new_name + "']").val());
+
+        });
+	 	
+    });
