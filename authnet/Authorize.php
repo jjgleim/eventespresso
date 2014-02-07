@@ -90,17 +90,19 @@ class Espresso_Authorize extends Espresso_PaymentGateway {
 		$this->addField('x_Login', $this->login);
 		$this->addField('x_fp_sequence', $this->fields['x_Invoice_num']);
 		$this->addField('x_fp_timestamp', time());
-		$data = $this->fields['x_Login'] . '^' .
-						$this->fields['x_Invoice_num'] . '^' .
-						$this->fields['x_fp_timestamp'] . '^' .
-						$this->fields['x_Amount'] . '^';
-		if (phpversion() >= '5.1.2') {
-			$fingerprint = hash_hmac("md5", $data, $this->secret);
-		} else {
-			$fingerprint = bin2hex(mhash(MHASH_MD5, $data, $this->secret));
-		}
+		$fingerprint = $this->generate_hash($this->fields['x_Login'], $this->fields['x_Invoice_num'], $this->fields['x_fp_timestamp'], $this->fields['x_Amount']);
 		$this->addField('x_fp_hash', $fingerprint);
 	}
+        
+    public function generate_hash($sequence, $time, $amount) {
+            $data = ($this->login.'^'.$sequence.'^'.$time.'^'.$amount.'^');
+            if (phpversion() >= '5.1.2') {
+                    $fingerprint = hash_hmac("md5", $data, $this->secret);
+            } else {
+                    $fingerprint = bin2hex(mhash(MHASH_MD5, $data, $this->secret));
+            }
+            return $fingerprint;
+        }
 
 	/**
 	 * Add a line item.
