@@ -66,7 +66,7 @@ function espresso_process_authnet($payment_data) {
                             $payment_data['payment_status'] = 'Completed';
                         } elseif ($myAuthorize->ipnData['x_amount'] < $payment_data['amount_owed']) {
                             $payment_data['payment_status'] = 'Pending';
-                            $payment_data['amount_paid'] = $myPaypal->ipnData['mc_gross'];
+                            $payment_data['amount_paid'] = $myAuthorize->ipnData['x_amount'];
                         }
 		} else {
 			$myAuthorize->lastError = $respmsg;
