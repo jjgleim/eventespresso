@@ -33,7 +33,7 @@ function get_my_hash()
 	$authnet_transaction_key = empty($authnet_settings['authnet_transaction_key']) ? '' : $authnet_settings['authnet_transaction_key'];
 	$myAuthorize = new Espresso_Authorize();
 	$myAuthorize->setUserInfo($authnet_login_id, $authnet_transaction_key);
-	$fingerprint = $myAuthorize->generate_hash($_GET['x_Invoice_num'], $_GET['x_fp_timestamp'], $_GET['x_Amount']);
+	$fingerprint = $myAuthorize->generate_hash($_REQUEST['x_Invoice_num'], $_REQUEST['x_fp_timestamp'], $_REQUEST['x_Amount']);
     echo $fingerprint;
     die();
 }
