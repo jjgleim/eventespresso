@@ -90,7 +90,7 @@ class Espresso_Authorize extends Espresso_PaymentGateway {
 		$this->addField('x_Login', $this->login);
 		$this->addField('x_fp_sequence', $this->fields['x_Invoice_num']);
 		$this->addField('x_fp_timestamp', time());
-		$fingerprint = $this->generate_hash($this->fields['x_Login'], $this->fields['x_Invoice_num'], $this->fields['x_fp_timestamp'], $this->fields['x_Amount']);
+		$fingerprint = $this->generate_hash($this->fields['x_Invoice_num'], $this->fields['x_fp_timestamp'], $this->fields['x_Amount']);
 		$this->addField('x_fp_hash', $fingerprint);
 	}
         
