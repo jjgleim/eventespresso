@@ -1,12 +1,22 @@
+// There are two different approaches represented here. The the hiding of the copy-all button
+// and the additional attendee forms is the same, but the copying is different. You can either leverage the existing
+// code on the copy-all button and simply add this code:
 jQuery(document).ready(function() {
 	jQuery('#event_espresso_checkout_form div.multi-reg-page:not(:first)').css('display', 'none');
-	jQuery('.copy-all-button-wrapper').parent().parent().css('display', 'none')
+	jQuery('.copy-all-button-wrapper').parent().parent().css('display', 'none');
+
 	jQuery('.event_questions input').change(function() {
 		jQuery('.copy-all-button').click();
 	});
 });
 
-// replaces the section in espresso_cart_functions.js for the copy-all-button
+// Or you can alter the copy-all button code. Add this code:
+jQuery(document).ready(function() {
+	jQuery('#event_espresso_checkout_form div.multi-reg-page:not(:first)').css('display', 'none');
+	jQuery('.copy-all-button-wrapper').parent().parent().css('display', 'none');
+});
+
+// and then replace the section in espresso_cart_functions.js for the copy-all-button with this:
 
 jQuery('.event_questions input').on('change', function() {
 
